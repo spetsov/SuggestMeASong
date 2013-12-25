@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>http://soundcloud.codeplex.com/license</licenseUrl>
+    <projectUrl>http://soundcloud.codeplex.com/</projectUrl>
+    <iconUrl>http://download.codeplex.com/download/Avatar.ashx?DownloadId=343877</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>
+      - Refactored the TResponse restriction out of the SoundCloudClient
+      - Added an Errors class that will be part of an exception when errors are returned by the soundcloud API
+      - Added handling errors that are returned from the soundcloud API
+      - Introduced the SoundCloudException class that contains the errors that where returned by the soundcloud API
+    </releaseNotes>
+    <copyright>Copyright 2012</copyright>
+    <tags>Coilz Ewk SoundCloud Soundcloud soundcloud api wrapper library</tags>
+  </metadata>
+</package>

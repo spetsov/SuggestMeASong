@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A6426FAA-97C0-480E-AC65-920A777B3E46}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ewk.SoundCloud.ApiLibrary</RootNamespace>
+    <AssemblyName>Ewk.SoundCloud.ApiLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Debug\Ewk.SoundCloud.ApiLibrary.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Release\Ewk.SoundCloud.ApiLibrary.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DocumentationFile>bin\Release\Ewk.SoundCloud.ApiLibrary.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ewk.Extensions, Version=1.1.4759.21149, Culture=neutral, PublicKeyToken=0ffe897e6e5722cd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ewk.Extensions.1.1.4759.21149\lib\net45\Ewk.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="DateTimeConverter.cs" />
+    <Compile Include="Entities\Comment.cs" />
+    <Compile Include="Entities\Connection.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\OAuth2Token.cs" />
+    <Compile Include="Entities\UserMe.cs" />
+    <Compile Include="Entities\Favorite.cs" />
+    <Compile Include="Entities\Group.cs" />
+    <Compile Include="Entities\MiniApp.cs" />
+    <Compile Include="Entities\MiniUser.cs" />
+    <Compile Include="Entities\Playlist.cs" />
+    <Compile Include="Entities\Track.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\WebProfile.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="ISoundCloudClient.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Comments\CommentResources.cs" />
+    <Compile Include="Resources\Comments\CommentsResource.cs" />
+    <Compile Include="Resources\EntityExtensions.cs" />
+    <Compile Include="Resources\EntityResourceBase.cs" />
+    <Compile Include="Resources\EntitiesResourceBase.cs" />
+    <Compile Include="Resources\EntitiesGetBase.cs" />
+    <Compile Include="Resources\Groups\GroupContributorsResource.cs" />
+    <Compile Include="Resources\Groups\GroupMembersResource.cs" />
+    <Compile Include="Resources\Groups\GroupModeratorsResource.cs" />
+    <Compile Include="Resources\IEntityDelete.cs" />
+    <Compile Include="Resources\IEntityPut.cs" />
+    <Compile Include="Resources\IEntityPost.cs" />
+    <Compile Include="Resources\IEntityGet.cs" />
+    <Compile Include="Resources\IEntitiesGet.cs" />
+    <Compile Include="Resources\Playlists\PlaylistResources.cs" />
+    <Compile Include="Resources\Playlists\PlaylistsResource.cs" />
+    <Compile Include="Resources\Playlists\IPlaylistResources.cs" />
+    <Compile Include="Resources\Tracks\ITrackFavoriterResources.cs" />
+    <Compile Include="Resources\Tracks\TrackFavoriterResources.cs" />
+    <Compile Include="Resources\Tracks\TrackFavoritersResource.cs" />
+    <Compile Include="Resources\Users\UserWebProfilesResource.cs" />
+    <Compile Include="Resources\Users\MeConnectionResources.cs" />
+    <Compile Include="Resources\Users\MeConnectionsResource.cs" />
+    <Compile Include="Resources\Users\IMeConnectionResources.cs" />
+    <Compile Include="Resources\Users\IMeResources.cs" />
+    <Compile Include="Resources\Users\IUserFavoriteResources.cs" />
+    <Compile Include="Resources\Users\UserFavoriteResources.cs" />
+    <Compile Include="Resources\Users\UserFavoritesResource.cs" />
+    <Compile Include="Resources\Users\IUserFollowingResources.cs" />
+    <Compile Include="Resources\Users\UserFollowingResources.cs" />
+    <Compile Include="Resources\Users\UserFollowingsResource.cs" />
+    <Compile Include="Resources\Users\IUserFollowerResources.cs" />
+    <Compile Include="Resources\Users\UserFollowerResources.cs" />
+    <Compile Include="Resources\Users\UserFollowersResource.cs" />
+    <Compile Include="Resources\Users\UserPlaylistsResource.cs" />
+    <Compile Include="Resources\Users\UserCommentsResource.cs" />
+    <Compile Include="Resources\Users\UserGroupsResource.cs" />
+    <Compile Include="Resources\Users\MeResources.cs" />
+    <Compile Include="Resources\Users\UserResourcesBase.cs" />
+    <Compile Include="Resources\Users\UserTracksResource.cs" />
+    <Compile Include="Resources\Groups\GroupResources.cs" />
+    <Compile Include="Resources\Groups\GroupsResource.cs" />
+    <Compile Include="Resources\Groups\GroupTracksResource.cs" />
+    <Compile Include="Resources\Groups\GroupUsersResource.cs" />
+    <Compile Include="Resources\Groups\GroupPendingTrackResources.cs" />
+    <Compile Include="Resources\Groups\IGroupPendingTrackResources.cs" />
+    <Compile Include="Resources\Groups\GroupPendingTracksResource.cs" />
+    <Compile Include="Resources\Groups\IGroupResources.cs" />
+    <Compile Include="Resources\Comments\ICommentResources.cs" />
+    <Compile Include="Resources\Tracks\TrackResources.cs" />
+    <Compile Include="Resources\Tracks\ITrackResources.cs" />
+    <Compile Include="Resources\IEntitiesResource.cs" />
+    <Compile Include="Resources\Tracks\TrackCommentResources.cs" />
+    <Compile Include="Resources\Tracks\TrackCommentsResource.cs" />
+    <Compile Include="Resources\Tracks\ITrackCommentResources.cs" />
+    <Compile Include="Resources\Users\IUserResources.cs" />
+    <Compile Include="Resources\ResourceBase.cs" />
+    <Compile Include="Resources\Tracks\TracksResource.cs" />
+    <Compile Include="Resources\Users\UserResources.cs" />
+    <Compile Include="Resources\Users\UsersResource.cs" />
+    <Compile Include="SoundCloud.cs" />
+    <Compile Include="SoundCloudClient.cs" />
+    <Compile Include="SoundCloudException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ApiLibrary.nuspec" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Publish (
+cd $(ProjectDir)
+$(SolutionDir)..\Assemblies\NuGet spec
+$(SolutionDir)..\Assemblies\NuGet pack -sym $(ProjectFileName) -Prop Configuration=Release
+move *.nupkg $(SolutionDir)..\Assemblies\
+)</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
