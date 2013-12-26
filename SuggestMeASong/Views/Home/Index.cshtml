@@ -1,55 +1,39 @@
-﻿
-<script src="https://w.soundcloud.com/player/api.js"></script>
-
-
-<script>
-    //SC.initialize({
-    //    client_id: 'eeb92cf54788bbbc246cedd5af656f4c'
-    //});
-
-    $(window).load(function () {
-        $(".track").each(function (i, el) {
-            var track_url = el.innerHTML;
-            SC.Widget(el);
-            //SC.oEmbed(track_url, { auto_play: false }, function (oEmbed) {
-            //    el.innerHTML = oEmbed.html;
-            //    $(el).show();
-            //});
-        })
-    });
-</script>
-
-@{
-    ViewBag.Title = "Home Page";
+﻿@{
+    ViewBag.Title = "Suggest me a song Home";
 }
 @section featured {
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
-                <h1>@ViewBag.Title.</h1>
-                <h2>@ViewBag.Message</h2>
+                <h1>Our suggestions for you:</h1>
             </hgroup>
         </div>
     </section>
 }
-<h3>Tracks:</h3>
-<ol>
-    @foreach (var item in @ViewBag.Tracks)
-    {
-        <li>
-            <iframe class="track" src="@string.Format("//w.soundcloud.com/player/?url={0}", item.permalink_url)" width="100%" scrolling="no" frameborder="no"></iframe>
-        </li>
-    }
-</ol>
+@if (ViewBag.Tracks != null)
+{
+    <h3>Soundcloud Tracks:</h3>
+    <ol>
+        @foreach (var item in @ViewBag.Tracks)
+        {
+            <li>
+                <iframe width="100%" height="166" scrolling="no" frameborder="no" src="@string.Format("https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{0}&amp;color=ff6600&amp;auto_play=false&amp;show_artwork=true", item.ExternalId)"></iframe>
+            </li>
+        }
+    </ol>
+}
 
-<h3>YouTube videos:</h3>
-<ol>
-    @foreach (var item in @ViewBag.Videos)
-    {
-        <li>
-            <iframe width="540" height="350" src="@string.Format("//www.youtube.com/embed/{0}", item.Id.VideoId)" frameborder="0"></iframe>
-        </li>
-    }
-</ol>
+@if (ViewBag.Videos != null)
+{
+    <h3>YouTube videos:</h3>
+    <ol>
+        @foreach (var item in @ViewBag.Videos)
+        {
+            <li>
+                <iframe width="540" height="350" src="@string.Format("//www.youtube.com/embed/{0}", item.ExternalId)" frameborder="0"></iframe>
+            </li>
+        }
+    </ol>   
+}
 
 

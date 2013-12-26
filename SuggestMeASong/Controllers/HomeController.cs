@@ -15,6 +15,8 @@ using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using System.Configuration;
 using Google.Apis.YouTube.v3.Data;
+using SuggestMeASong.Recommenders;
+using WebMatrix.WebData;
 
 namespace SuggestMeASong.Controllers
 {
@@ -23,33 +25,15 @@ namespace SuggestMeASong.Controllers
     {
         public async Task<ActionResult> Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-            var scManager = new SoundCloud(ConfigurationManager.AppSettings["SoundCloudApiKey"]);
-            scManager.SetPageSize(5);
-            var tracks = await scManager.Tracks.GetAsync(1, new Dictionary<string, string>() { 
-            { "q", "ladygaga" } ,
-            {"filter", "all"} ,
-            {"embeddable_by", "all"},
-            {"types", "original,recording"},
-            {"duration[from]", "2000"},
-            {"order", "hotness"}
-            });
-            ViewBag.Tracks = tracks;
-
-            YouTubeService youtube = new YouTubeService(new BaseClientService.Initializer()
+            if (User.Identity.IsAuthenticated)
             {
-                ApiKey = ConfigurationManager.AppSettings["YouTubeApiKey"]
-            });
+                IRecommender scRecommender = new SoundCloudRecommender();
+                ViewBag.Tracks = await scRecommender.Recommend(User);
 
-            SearchResource.ListRequest listRequest = youtube.Search.List("snippet");
-            listRequest.Q = "ladygaga";
-            listRequest.Order = SearchResource.ListRequest.OrderEnum.Relevance;
-            listRequest.Type = "video";
-            listRequest.MaxResults = 5;
 
-            SearchListResponse searchResponse = listRequest.Execute();
-
-            ViewBag.Videos = searchResponse.Items;
+                IRecommender youTubeRecommender = new YouTubeRecommender();
+                ViewBag.Videos = await youTubeRecommender.Recommend(User);
+            }
 
             return View();
         }

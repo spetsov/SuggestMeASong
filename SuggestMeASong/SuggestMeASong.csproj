@@ -235,10 +235,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AllModels.cs" />
     <Compile Include="Models\FbMusicLike.cs" />
     <Compile Include="Models\SongsDatabaseInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recommenders\IRecommendationStrategy.cs" />
+    <Compile Include="Recommenders\IRecommender.cs" />
+    <Compile Include="Recommenders\ItemToItemRecommendationStrategy.cs" />
+    <Compile Include="Recommenders\Recommender.cs" />
+    <Compile Include="Recommenders\SoundCloudRecommender.cs" />
+    <Compile Include="Recommenders\YouTubeRecommender.cs" />
     <Compile Include="Social\FacebookLikesReader.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -21,17 +21,16 @@ namespace SuggestMeASong.Social
 
         public void PopulateNewUserLikes(int userId)
         {
-            var likes = this.ReadLikes(userId);
+            this.ReadLikes(userId);
         }
 
         public void UpdateExistingUserLikes(int userId)
         {
-            var likes = this.ReadLikes(userId);
+            this.ReadLikes(userId);
         }
 
-        private IList<FbMusicLike> ReadLikes(int userId)
+        private void ReadLikes(int userId)
         {
-            IList<FbMusicLike> likesList = new List<FbMusicLike>();
             JObject musicLikes = JObject.Parse(this.fbClient.Get("/me/music").ToString());
             if (musicLikes != null)
             {
@@ -39,21 +38,16 @@ namespace SuggestMeASong.Social
                 {
                     foreach (var item in musicLikes["data"].Children())
                     {
-                        FbMusicLike like = new FbMusicLike();
                         var name = item["name"].ToString();
-                        like.Name = name;
-                        likesList.Add(like);
                         context.FacebookLikes.Add(new FacebookLike()
                         {
-                            Name = like.Name,
+                            Name = name,
                             UserId = userId
                         });
                     }
                     context.SaveChanges();
                 }
             }
-
-            return likesList;
         }
     }
 }

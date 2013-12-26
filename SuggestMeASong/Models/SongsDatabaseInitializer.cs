@@ -12,11 +12,7 @@ namespace SuggestMeASong.Models
     {
         public void InitializeDatabase(SongsContext context)
         {
-            if (!context.Database.Exists())
-            {
-                // Create the SimpleMembership database without Entity Framework migration schema
-                ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
-            }
+            context.Database.CreateIfNotExists();
 
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
         }

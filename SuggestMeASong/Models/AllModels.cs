@@ -17,6 +17,7 @@ namespace SuggestMeASong.Models
 
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<FacebookLike> FacebookLikes { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
     }
 
     [Table("UserProfile")]
@@ -35,6 +36,20 @@ namespace SuggestMeASong.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public UserProfile User { get; set; }
+    }
+
+    [Table("Rating")]
+    public class Rating
+    {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public int Value { get; set; }
+        public string ExternalProviderName { get; set; }
+        public string ExternalId { get; set; }
         public int UserId { get; set; }
         [ForeignKey("UserId")]
         public UserProfile User { get; set; }
