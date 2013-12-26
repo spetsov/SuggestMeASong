@@ -47,14 +47,21 @@ namespace SuggestMeASong.Recommenders
 
         protected async override Task<IEnumerable<Rating>> RecommendRandomly()
         {
+            DateTime startDate = new DateTime(2010, 1, 1);
+            TimeSpan timeSpan = DateTime.Now - startDate;
+            var rand = new Random();
+            TimeSpan newSpan = new TimeSpan(0, rand.Next(0, (int)timeSpan.TotalMinutes), 0);
+            DateTime randomDate = startDate + newSpan;
+
             this.scManager.SetPageSize(3);
             var tracks = await this.scManager.Tracks.GetAsync(1, new Dictionary<string, string>() { 
-            { "q", "ladygaga" } ,
             {"filter", "all"} ,
             {"embeddable_by", "all"},
             {"types", "original,recording"},
             {"duration[from]", "2000"},
-            {"order", "hotness"}
+            {"order", "hotness"},
+            {"created_at[from]", string.Format("{0}-{1}-{2}", randomDate.Year, randomDate.Month, randomDate.Day)},
+            {"created_at[to]", string.Format("{0}-{1}-{2}", randomDate.Year, randomDate.Month, randomDate.Day + 2)}
             });
 
             return this.TracksToRatings(tracks);

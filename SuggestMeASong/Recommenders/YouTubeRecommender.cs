@@ -49,9 +49,17 @@ namespace SuggestMeASong.Recommenders
 
         protected async override Task<IEnumerable<Rating>> RecommendRandomly()
         {
+            DateTime startDate = new DateTime(2008, 1, 1);
+            TimeSpan timeSpan = DateTime.Now - startDate;
+            var rand = new Random();
+            TimeSpan newSpan = new TimeSpan(0, rand.Next(0, (int)timeSpan.TotalMinutes), 0);
+            DateTime randomDate = startDate + newSpan;
+
             SearchResource.ListRequest listRequest = youtube.Search.List("snippet");
-            listRequest.Q = "ladygaga";
-            listRequest.Order = SearchResource.ListRequest.OrderEnum.Relevance;
+            listRequest.PublishedAfter = randomDate;
+            listRequest.PublishedBefore = randomDate.AddDays(2);
+            listRequest.VideoCategoryId = "10";
+            listRequest.Order = SearchResource.ListRequest.OrderEnum.Date;
             listRequest.Type = "video";
             listRequest.MaxResults = 3;
 
