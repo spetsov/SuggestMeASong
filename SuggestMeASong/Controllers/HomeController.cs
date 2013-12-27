@@ -27,12 +27,24 @@ namespace SuggestMeASong.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                IRecommender scRecommender = new SoundCloudRecommender();
-                ViewBag.Tracks = await scRecommender.Recommend(User);
+                try
+                {
+                    IRecommender scRecommender = new SoundCloudRecommender();
+                    ViewBag.Tracks = await scRecommender.Recommend(User);
+                }
+                catch (HttpException e)
+                {
 
+                }
 
-                IRecommender youTubeRecommender = new YouTubeRecommender();
-                ViewBag.Videos = await youTubeRecommender.Recommend(User);
+                try
+                {
+                    IRecommender youTubeRecommender = new YouTubeRecommender();
+                    ViewBag.Videos = await youTubeRecommender.Recommend(User);
+                }
+                catch (HttpException e)
+                {
+                }
             }
 
             return View();
