@@ -32,7 +32,7 @@ namespace SuggestMeASong.Controllers
                     IRecommender scRecommender = new SoundCloudRecommender();
                     ViewBag.Tracks = await scRecommender.Recommend(User);
                 }
-                catch (HttpException e)
+                catch (Ewk.SoundCloud.ApiLibrary.SoundCloudException e)
                 {
 
                 }
