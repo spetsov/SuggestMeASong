@@ -24,17 +24,15 @@ namespace SuggestMeASong.Recommenders
         {
             get
             {
-                return new ItemToItemRecommendationStrategy();
+                return new UserToUserRecommendationStrategy(SOUNDCLOUD_PROVIDER_NAME);
             }
         }
 
-        protected async override Task<IEnumerable<Rating>> RecommendByLikes(IList<FacebookLike> likes)
+        protected async override Task<IEnumerable<Rating>> RecommendByLikes(FacebookLike like, int count)
         {
-            string q = this.GetRandomLikeName(likes);
-
-            this.scManager.SetPageSize(3);
+            this.scManager.SetPageSize(count);
             var tracks = await this.scManager.Tracks.GetAsync(1, new Dictionary<string, string>() { 
-            { "q", q } ,
+            { "q", like.Name } ,
             {"filter", "all"} ,
             {"embeddable_by", "all"},
             {"types", "original,recording"},
@@ -45,7 +43,7 @@ namespace SuggestMeASong.Recommenders
             return this.TracksToRatings(tracks);
         }
 
-        protected async override Task<IEnumerable<Rating>> RecommendRandomly()
+        protected async override Task<IEnumerable<Rating>> RecommendRandomly(int count)
         {
             DateTime startDate = new DateTime(2010, 1, 1);
             TimeSpan timeSpan = DateTime.Now - startDate;
@@ -53,7 +51,7 @@ namespace SuggestMeASong.Recommenders
             TimeSpan newSpan = new TimeSpan(0, rand.Next(0, (int)timeSpan.TotalMinutes), 0);
             DateTime randomDate = startDate + newSpan;
 
-            this.scManager.SetPageSize(3);
+            this.scManager.SetPageSize(count);
             var tracks = await this.scManager.Tracks.GetAsync(1, new Dictionary<string, string>() { 
             {"filter", "all"} ,
             {"embeddable_by", "all"},
@@ -65,13 +63,6 @@ namespace SuggestMeASong.Recommenders
             });
 
             return this.TracksToRatings(tracks);
-        }
-
-        private string GetRandomLikeName(IList<FacebookLike> likes)
-        {
-            Random rand = new Random();
-            var randNumber = rand.Next(likes.Count() - 1);
-            return likes[randNumber].Name;
         }
 
         private IEnumerable<Rating> TracksToRatings(IEnumerable<Track> tracks)

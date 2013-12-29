@@ -42,7 +42,8 @@ namespace SuggestMeASong.Social
                         context.FacebookLikes.Add(new FacebookLike()
                         {
                             Name = name,
-                            UserId = userId
+                            UserId = userId,
+                            AlreadyRecommended = false
                         });
                     }
                     context.SaveChanges();

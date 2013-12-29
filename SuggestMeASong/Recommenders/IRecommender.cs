@@ -10,6 +10,6 @@ namespace SuggestMeASong.Recommenders
 {
     public interface IRecommender
     {
-        Task<IEnumerable<Rating>> Recommend(IPrincipal user);
+        Task<IEnumerable<Rating>> Recommend(IPrincipal user, int count);
     }
 }

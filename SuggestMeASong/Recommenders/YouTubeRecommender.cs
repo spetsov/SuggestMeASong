@@ -28,26 +28,24 @@ namespace SuggestMeASong.Recommenders
         {
             get
             {
-                return new ItemToItemRecommendationStrategy();
+                return new UserToUserRecommendationStrategy(YOUTUBE_PROVIDER_NAME);
             }
         }
 
-        protected async override Task<IEnumerable<Rating>> RecommendByLikes(IList<FacebookLike> likes)
+        protected async override Task<IEnumerable<Rating>> RecommendByLikes(FacebookLike like, int count)
         {
-            string q = this.GetRandomLikeName(likes);
-
             SearchResource.ListRequest listRequest = youtube.Search.List("snippet");
-            listRequest.Q = q;
+            listRequest.Q = like.Name;
             listRequest.Order = SearchResource.ListRequest.OrderEnum.Relevance;
             listRequest.Type = "video";
-            listRequest.MaxResults = 3;
+            listRequest.MaxResults = count;
 
             SearchListResponse searchResponse = await listRequest.ExecuteAsync();
 
             return TracksToRatings(searchResponse.Items);
         }
 
-        protected async override Task<IEnumerable<Rating>> RecommendRandomly()
+        protected async override Task<IEnumerable<Rating>> RecommendRandomly(int count)
         {
             DateTime startDate = new DateTime(2008, 1, 1);
             TimeSpan timeSpan = DateTime.Now - startDate;
@@ -61,18 +59,11 @@ namespace SuggestMeASong.Recommenders
             listRequest.VideoCategoryId = "10";
             listRequest.Order = SearchResource.ListRequest.OrderEnum.Date;
             listRequest.Type = "video";
-            listRequest.MaxResults = 3;
+            listRequest.MaxResults = count;
 
             SearchListResponse searchResponse = await listRequest.ExecuteAsync();
 
             return TracksToRatings(searchResponse.Items);
-        }
-
-        private string GetRandomLikeName(IList<FacebookLike> likes)
-        {
-            Random rand = new Random();
-            var randNumber = rand.Next(likes.Count() - 1);
-            return likes[randNumber].Name;
         }
 
         private IEnumerable<Rating> TracksToRatings(IEnumerable<SearchResult> videos)

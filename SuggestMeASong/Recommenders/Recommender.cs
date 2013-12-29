@@ -16,39 +16,45 @@ namespace SuggestMeASong.Recommenders
             get;
         }
 
-        protected abstract Task<IEnumerable<Rating>> RecommendByLikes(IList<FacebookLike> likes);
+        protected abstract Task<IEnumerable<Rating>> RecommendByLikes(FacebookLike like, int count);
 
-        protected abstract Task<IEnumerable<Rating>> RecommendRandomly();
+        protected abstract Task<IEnumerable<Rating>> RecommendRandomly(int count);
 
-        public async Task<IEnumerable<Rating>> Recommend(IPrincipal user)
+        public async Task<IEnumerable<Rating>> Recommend(IPrincipal user, int count)
         {
             var userId = WebSecurity.GetUserId(user.Identity.Name);
-            IEnumerable<Rating> recommendations;
+            List<Rating> recommendations;
             recommendations = await Strategy.Recommend(userId);
-            if (recommendations == null || recommendations.Count() == 0)
+            if (recommendations.Count() < count)
             {
                 if (this.UserHasFacebookLikes(userId))
                 {
-                    IList<FacebookLike> likes = this.GetUserFacebookLikes(userId);
-                    return await this.RecommendByLikes(likes);
+                    FacebookLike like = this.GetUserFacebookLike(userId);
+                    var recommendedLikes = await this.RecommendByLikes(like, count);
+                    recommendations.AddRange(recommendedLikes);
                 }
                 else
                 {
-                    return await this.RecommendRandomly();
+                    var randomRecommendations = await this.RecommendRandomly(count);
+                    recommendations.AddRange(randomRecommendations);
                 }
             }
 
-            return recommendations;
+            return recommendations.Take(count);
         }
 
-        private IList<FacebookLike> GetUserFacebookLikes(int userId)
+        private FacebookLike GetUserFacebookLike(int userId)
         {
-            List<FacebookLike> likes = new List<FacebookLike>();
             using (SongsContext cntx = new SongsContext())
             {
-                likes = cntx.FacebookLikes.Where(l => l.UserId == userId).ToList();
+                FacebookLike like = cntx.FacebookLikes.Where(l => l.UserId == userId && !l.AlreadyRecommended).First();
+                like.AlreadyRecommended = true;
+                cntx.FacebookLikes.Attach(like);
+                var entry = cntx.Entry(like);
+                entry.Property(l => l.AlreadyRecommended).IsModified = true;
+                cntx.SaveChanges();
+                return like;
             }
-            return likes;
         }
 
         private bool UserHasFacebookLikes(int userId)
@@ -56,7 +62,7 @@ namespace SuggestMeASong.Recommenders
             bool hasLikes = false;
             using (SongsContext cntx = new SongsContext())
             {
-                hasLikes = cntx.FacebookLikes.Any(l => l.UserId == userId);
+                hasLikes = cntx.FacebookLikes.Any(l => l.UserId == userId && !l.AlreadyRecommended);
             }
             return hasLikes;
         }

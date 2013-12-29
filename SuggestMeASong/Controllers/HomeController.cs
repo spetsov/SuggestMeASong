@@ -30,7 +30,7 @@ namespace SuggestMeASong.Controllers
                 try
                 {
                     IRecommender scRecommender = new SoundCloudRecommender();
-                    ViewBag.Tracks = await scRecommender.Recommend(User);
+                    ViewBag.Tracks = await scRecommender.Recommend(User, 3);
                 }
                 catch (Ewk.SoundCloud.ApiLibrary.SoundCloudException e)
                 {
@@ -40,7 +40,7 @@ namespace SuggestMeASong.Controllers
                 try
                 {
                     IRecommender youTubeRecommender = new YouTubeRecommender();
-                    ViewBag.Videos = await youTubeRecommender.Recommend(User);
+                    ViewBag.Videos = await youTubeRecommender.Recommend(User, 3);
                 }
                 catch (HttpException e)
                 {

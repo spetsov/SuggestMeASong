@@ -39,6 +39,7 @@ namespace SuggestMeASong.Models
         public int UserId { get; set; }
         [ForeignKey("UserId")]
         public UserProfile User { get; set; }
+        public bool AlreadyRecommended { get; set; }
     }
 
     [Table("Rating")]

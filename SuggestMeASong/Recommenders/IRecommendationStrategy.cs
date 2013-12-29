@@ -9,6 +9,6 @@ namespace SuggestMeASong.Recommenders
 {
     public interface IRecommendationStrategy
     {
-        Task<IEnumerable<Rating>> Recommend(int userId);
+        Task<List<Rating>> Recommend(int userId);
     }
 }
