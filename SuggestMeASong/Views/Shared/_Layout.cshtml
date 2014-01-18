@@ -4,6 +4,7 @@
         <meta charset="utf-8" />
         <title>@ViewBag.Title</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link href="~/Content/PagedList.css" rel="stylesheet"/>
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
@@ -22,6 +23,8 @@
                     <nav>
                         <ul id="menu">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("My YouTube Ratings", "MyRatings", "Home")</li>
+                            <li>@Html.ActionLink("My SoundCloud Ratings", "MyRatings", new { page = 1, providerName = "SoundCloud" })</li>
                         </ul>
                     </nav>
                 </div>

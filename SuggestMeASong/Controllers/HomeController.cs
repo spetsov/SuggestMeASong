@@ -17,10 +17,13 @@ using System.Configuration;
 using Google.Apis.YouTube.v3.Data;
 using SuggestMeASong.Recommenders;
 using WebMatrix.WebData;
+using SuggestMeASong.Models;
+using PagedList;
 
 namespace SuggestMeASong.Controllers
 {
     [InitializeSimpleMembership]
+    [Authorize]
     public class HomeController : Controller
     {
         public async Task<ActionResult> Index()
@@ -50,18 +53,20 @@ namespace SuggestMeASong.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult MyRatings(int? page, string providerName = "YouTube")
         {
-            ViewBag.Message = "Your app description page.";
+            var pageIndex = page ?? 1;
+            var pageSize = 5;
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            using (SongsContext context = new SongsContext())
+            {
+                var userId = WebSecurity.GetUserId(User.Identity.Name);
+                var videos = context.Ratings.Where(r => r.ExternalProviderName == providerName 
+                    && r.UserId == userId).OrderByDescending(r => r.Value);
+                ViewBag.PagedList = videos.ToPagedList(pageIndex, pageSize);
+                ViewBag.ProviderName = providerName;
+                return View();
+            }
         }
     }
 }
