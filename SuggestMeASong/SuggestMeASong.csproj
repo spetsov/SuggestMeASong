@@ -249,6 +249,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recommenders\IRecommendationStrategy.cs" />
     <Compile Include="Recommenders\IRecommender.cs" />
+    <Compile Include="Recommenders\ItemToItemRecommendationStrategy.cs" />
+    <Compile Include="Recommenders\UserToUserAdjustedCosineRecommendationStrategy.cs" />
     <Compile Include="Recommenders\UserToUserRecommendationStrategy.cs" />
     <Compile Include="Recommenders\Recommender.cs" />
     <Compile Include="Recommenders\SoundCloudRecommender.cs" />
